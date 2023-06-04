@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Кнопка лайка</title>
+</head>
+<body>
+  <h1>Кількість лайків: <span id="likeCount">0</span></h1>
+  <button id="likeButton" onclick="toggleLike()">Лайк</button>
+
+  <script>
+    // Функція для перевірки, чи користувач вже поставив лайк
+    function checkLiked() {
+      return localStorage.getItem('liked') === 'true';
+    }
+
+    // Функція для оновлення відображення кількості лайків
+    function updateLikeCount() {
+      var likeCount = parseInt(localStorage.getItem('likeCount')) || 0;
+      document.getElementById('likeCount').innerText = likeCount;
+    }
+
+    // Функція для зміни стану лайка
+    function toggleLike() {
+      var liked = checkLiked();
+      var likeCount = parseInt(localStorage.getItem('likeCount')) || 0;
+
+      if (liked) {
+        // Користувач скасував лайк
+        liked = false;
+        likeCount--;
+      } else {
+        // Користувач поставив лайк
+        liked = true;
+        likeCount++;
+      }
+
+      // Збереження стану лайка та кількості лайків в LocalStorage
+      localStorage.setItem('liked', liked);
+      localStorage.setItem('likeCount', likeCount);
+
+      // Оновлення відображення кількості лайків
+      updateLikeCount();
+    }
+
+    // Ініціалізація стану лайка та кількості лайків при завантаженні сторінки
+    updateLikeCount();
+  </script>
+</body>
+</html>
